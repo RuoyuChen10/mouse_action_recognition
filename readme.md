@@ -1,6 +1,6 @@
 # Mouse Action Recognition based on Deep Learning and Video
 
-![mouse action](.\img\mouse_action.gif)
+![mouse action](https://github.com/RuoyuChen10/mouse_action_recognition/blob/master/img/mouse_action.gif)
 
 
 
