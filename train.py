@@ -90,7 +90,7 @@ class Train_API:
             self.optimize_param(self.model, train_loader, optimizer, criterion)
             self.eval_model(self.model, val_loader, criterion)
         # 保存
-        torch.save(model, "./checkpoint/model.pth")  # 保存整个模型
+        torch.save(self.model, "./checkpoint/model.pth")  # 保存整个模型
 
 if __name__ == "__main__":
     train = Train_API()
