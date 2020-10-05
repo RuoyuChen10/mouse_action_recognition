@@ -8,14 +8,18 @@ from torch.autograd import Variable
 from torch.utils.data import DataLoader
 from dataload import Load
 from network import C3D
-
+import utils
 
 class Train_API:
     def __init__(self):
-        self.batch_size = 6
-        self.learning_rate = 10e-2
-        self.epoches = 100
-        self.model = C3D()
+        self.batch_size = utils.batch_size
+        self.learning_rate = utils.learning_rate
+        self.epoches = utils.training_epochs
+        if utils.network=='C3D':
+            self.model = C3D()
+        else:
+            self.model = C3D()
+            print("Not find the network, using the default C3D network.")
         self.load = Load()
         self.training_data_dir='train.txt'
         self.val_data_dir='val.txt'
@@ -90,7 +94,7 @@ class Train_API:
             self.optimize_param(self.model, train_loader, optimizer, criterion)
             self.eval_model(self.model, val_loader, criterion)
         # 保存
-        torch.save(self.model, "./checkpoint/model.pth")  # 保存整个模型
+        torch.save(self.model, "./model/model.pth")  # 保存整个模型
 
 if __name__ == "__main__":
     train = Train_API()
