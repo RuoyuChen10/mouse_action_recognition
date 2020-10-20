@@ -7,7 +7,7 @@ import torch.optim as optim
 from torch.autograd import Variable
 from torch.utils.data import DataLoader
 from dataload import Load
-from network import C3D
+from Net.C3D import *
 import utils
 
 class Train_API:
@@ -15,14 +15,27 @@ class Train_API:
         self.batch_size = utils.batch_size
         self.learning_rate = utils.learning_rate
         self.epoches = utils.training_epochs
+        self.pretrained = "./model/ucf101-caffe.pth"
         if utils.network=='C3D':
             self.model = C3D()
         else:
             self.model = C3D()
             print("Not find the network, using the default C3D network.")
+        self.pretrained_load(True)
         self.load = Load()
         self.training_data_dir='train.txt'
         self.val_data_dir='val.txt'
+    def pretrained_load(self, is_load=False):
+        if is_load is True:
+            try:
+                model_dict = self.model.state_dict()
+                pretrained_dict = torch.load(self.pretrained)
+                pretrained_dict = {k: v for k, v in pretrained_dict.items() if k in model_dict}
+                model_dict.update(pretrained_dict)
+                self.model.load_state_dict(model_dict)
+                print("Model parameters: " + self.pretrained + " has been load!")
+            except:
+                print("Pretrained model path: "+ self.pretrained + " is not exist.")
     def data_init(self):
         '''
         初始化数据
@@ -88,7 +101,7 @@ class Train_API:
         if torch.cuda.is_available():
             self.model = self.model.cuda()
         criterion = nn.CrossEntropyLoss()
-        optimizer = optim.SGD(self.model.parameters(), lr=self.learning_rate)
+        optimizer = optim.Adam(self.model.parameters(), lr=self.learning_rate)
         epoch = 0
         for epoch in range(1, self.epoches + 1):
             self.optimize_param(self.model, train_loader, optimizer, criterion)

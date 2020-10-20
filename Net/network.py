@@ -31,7 +31,7 @@ class C3D(nn.Module):
         self.fc7 = nn.Linear(4096, 4096)
         self.fc8 = nn.Linear(4096, num_classes)
 
-        self.dropout = nn.Dropout(p=0.5)
+        self.dropout = nn.Dropout(p=0.8)
 
         self.relu = nn.ReLU()
         self.softmax = nn.Softmax()

@@ -1,5 +1,5 @@
 network = "C3D"
-class_num =16
-training_epochs = 1000
-learning_rate = 10e-2
+class_num =4
+training_epochs = 500
+learning_rate = 10e-4
 batch_size = 6

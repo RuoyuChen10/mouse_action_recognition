@@ -2,6 +2,7 @@ import numpy as np
 import cv2
 import os
 import torch
+import utils
 
 class Load:
     '''
@@ -10,7 +11,7 @@ class Load:
     def __init__(self):
         self.datasets_txt = './dataset.txt'
         self.img_size = (112,112)
-        self.num_class = 16
+        self.num_class = utils.class_num
     def read_datasets_txt(self, training_set_dir="./train.txt",val_set_dir="./val.txt"):
         '''
         读取文本数据
